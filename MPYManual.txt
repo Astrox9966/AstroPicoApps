@@ -577,7 +577,7 @@ elif state == "ON":
 elif state == "BLINKING":  
     state = "OFF"  
 4. State machines for simulations:
-Simulations like your Yanchep limestone project benefit from state machines to manage transitions.
+Simulations like a limestone cave formation simulation benefit from state machines to manage transitions.
 For example, transitions might be triggered by user input (e.g., pressing a key to move to the next stage).
 5. Implementing state machines:
 State machines in MicroPython can be implemented with simple if statements, while loops, or dictionaries.
@@ -755,7 +755,6 @@ As you continue your learning journey, consider exploring new libraries, working
 You can create everything from simple automation systems to full-fledged interactive projects.
 7. The Power of Simulations:
 One exciting area where MicroPython shines is simulation.
-We saw how to simulate the formation of limestone, cave formation, and Aboriginal habitation in the Yanchep project.
 Simulations allow you to model complex systems and present them in an engaging way, and they can help you explore scenarios that are otherwise difficult to visualize.
 8. What’s Next?
 Now that you have a solid understanding of MicroPython, you can tackle more advanced topics and expand your knowledge.
