@@ -273,43 +273,38 @@ Hardware interfacing is vital for making your simulation interact with real-worl
 
 
 DISPLAY AND GRAPHICS:
-In MicroPython, displaying graphics on a screen typically involves two main parts:
-    Initializing the display hardware.
-    Drawing to a buffer using the framebuf module or a screen driver.
-MicroPython-compatible screens usually communicate over SPI or I2C. The PicoCalc has a 320x320 color LCD,
-and it most likely uses a controller like ST7789 or ILI9341. These require a driver to function.
-The framebuf module is used to handle drawing operations. It creates a buffer in memory that you can
-modify with functions like pixel, text, or line, and then push to the screen.
-To use a screen, follow this general process:
-    Import the necessary display driver and framebuf.
-    Set up communication (SPI or I2C).
-    Create a buffer (e.g., a bytearray) that matches your screen's resolution and color depth.
-    Create a framebuf.FrameBuffer object using that buffer.
-    Use drawing functions to modify the buffer.
-    Flush or update the buffer to the display.
-Basic drawing functions in framebuf include:
-    fill(color) – Fill the entire screen with a color.
-    pixel(x, y, color) – Draw a pixel at the given x/y location.
-    line(x1, y1, x2, y2, color) – Draw a straight line between two points.
-    rect(x, y, w, h, color) – Draw the outline of a rectangle.
-    fill_rect(x, y, w, h, color) – Draw a filled rectangle.
-    text(str, x, y, color) – Write text at a location.
-Colors are often in 16-bit RGB565 format. Examples:
-BLACK = 0x0000
-WHITE = 0xFFFF
-RED = 0xF800
-GREEN = 0x07E0
-BLUE = 0x001F
-You modify the frame buffer with the drawing functions, then push it to the screen using your display's
-show() or update() function (depends on the library used).
-Tips for using the PicoCalc screen:
-    Stick to simple fonts and avoid large blocks of animation.
-    The screen is 320x320 pixels; use the space efficiently.
-    Try to limit updates to only the parts of the screen that change.
-    You can create a simple refresh loop to simulate animations or UI updates.
-    Typical FPS (frames per second) should be around 10-15 for smooth basic updates.
-Use double-buffering if you want to reduce flickering, but this will increase memory usage.
-The PicoCalc should handle basic framebuf drawing well, but avoid overloading it with constant redraws.
+MicroPython can draw to screens like the 320x320 color LCD on the PicoCalc by using a frame buffer and a display driver.
+This usually involves two things:
+    1. Setting up the hardware interface (SPI or I2C).
+    2. Drawing to an in-memory buffer using framebuf or a compatible display library.
+The PicoCalc screen likely uses a controller such as ST7789 or ILI9341. These need a driver to communicate with MicroPython.
+A popular choice is the st7789py or similar library, along with MicroPython’s framebuf module for buffer handling.
+General Workflow for Display Drawing:
+    • Import the display driver and framebuf.
+    • Initialize the communication bus (usually SPI).
+    • Create a bytearray buffer matching the screen’s resolution and color depth.
+    • Create a framebuf.FrameBuffer object using this buffer.
+    • Use drawing functions to write to the buffer.
+    • Flush the buffer to the screen with display.show() or display.update().
+Core FrameBuffer Drawing Functions:
+    • fill(color) – Fills the entire screen with one color.
+    • pixel(x, y, color) – Draws a single pixel.
+    • line(x1, y1, x2, y2, color) – Draws a line between two points.
+    • rect(x, y, w, h, color) – Draws a rectangle outline.
+    • fill_rect(x, y, w, h, color) – Draws a filled rectangle.
+    • text(str, x, y, color) – Writes text at a position.
+Colors are usually defined in RGB565 format (16-bit). Examples include:
+    BLACK = 0x0000      WHITE = 0xFFFF
+    RED = 0xF800           GREEN = 0x07E0        BLUE = 0x001F
+After drawing, the buffer must be pushed to the screen using the driver's refresh method, e.g. disp.show().
+Tips for Using PicoCalc's LCD Screen:
+    • Stick to lightweight fonts and minimal graphics.
+    • The display is 320x320 px—optimize layout to avoid clutter.
+    • Limit screen updates to regions that change (partial redraws).
+    • Aim for 10–15 FPS for smooth, efficient updates.
+    • Create a refresh loop for animations or dynamic content.
+Double-buffering can help reduce flicker by writing off-screen first, but it consumes more memory.
+Avoid excessive full-screen redraws; even simple UIs can strain the system if not managed well.
 
 
 DATA STRUCTURES:
