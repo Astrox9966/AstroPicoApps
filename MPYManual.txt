@@ -15,24 +15,24 @@ highlighting those differences, and helping you adapt Python knowledge to the em
 
 
 CONTENTS:
-1. Introduction to MicroPython - Line 32
-2. Getting Started with MicroPython - Line 54
-3. Basic Syntax - Line 72
-4. Control Structures - Line 112
-5. Functions - Line 146
-6. Modules and Libraries - Line 180
-7. Working with Files - Line 208
-8. Working with Hardware - Line 230
-9. Display & Graphics - Line 265
-10. Data Structures - Line 305
-11. Error Handling - Line 329
-12. Memory & Performance Tips - Line 379
-13. Time & Delays - Line 426
-14. Input Handling - Line 460
-15. Event-Driven Programming - Line 509
-16. State Machines and Simulation Structuring - Line 560
-17. Troubleshooting and Debugging - Line 661
-18. Conclusion/Reflection - Line 730
+1. Introduction to MicroPython - Line 38
+2. Getting Started with MicroPython - Line 60
+3. Basic Syntax - Line 78
+4. Control Structures - Line 128
+5. Functions - Line 162
+6. Modules and Libraries - Line 190
+7. Working with Files - Line 
+8. Working with Hardware - Line 
+9. Display & Graphics - Line 
+10. Data Structures - Line 
+11. Error Handling - Line 
+12. Memory & Performance Tips - Line 
+13. Time & Delays - Line 
+14. Input Handling - Line 
+15. Event-Driven Programming - Line 
+16. State Machines and Simulation Structuring - Line 
+17. Troubleshooting and Debugging - Line 
+18. Conclusion/Reflection - Line 
 
 
 INTRODUCTION TO MICROPYTHON:
@@ -93,6 +93,16 @@ Basic data types include:
     float (e.g., 3.14)
     bool (True or False)
     str (e.g., "hello")
+    list (e.g., [1, 2, 3])
+    tuple (e.g., (1, 2, 3))
+    dict (e.g., {"key": "value"})
+    set (e.g., {1, 2, 3})
+    NoneType (e.g., None)
+    bytes (e.g., b"hello")
+    bytearray (e.g., bytearray(b"hello"))
+    memoryview (e.g., memoryview(b"hello"))
+    complex (e.g., 2 + 3j)
+    range (e.g., range(5))
 Strings are enclosed in quotes. You can use single ('text') or double ("text") quotes interchangeably.
     Concatenate strings using + and format using f"", .format(), or %.
     Example: print("Temp: " + str(temp))
@@ -228,7 +238,7 @@ This approach ensures the file is closed properly, even if an error occurs while
 
 
 WORKING WITH HARDWARE:
-MicroPython allows you to control hardware components like LEDs, motors, sensors, and displays on the Pico.
+MicroPython allows you to control hardware components like LEDs, motors, sensors, and displays connected to the Pico.
 Raspberry Pi Pico (and PicoCalc)
 The Raspberry Pi Pico is a microcontroller with GPIO pins, great for controlling hardware.
 The PicoCalc is a variation of the Pico designed for small displays and portable use, ideal for your project.
@@ -744,7 +754,7 @@ Debugging is an essential skill for any programmer, especially when working with
 We learned how to troubleshoot common issues, such as syntax errors, logical errors, and memory issues.
 Using techniques like print statements, exception handling, and external debugging tools can help resolve problems more efficiently.
 4. Memory and Performance:
-Memory is a limited resource in microcontrollers like the PicoCalc. Efficient memory management is crucial for stable operations.
+Memory is a limited resource in microcontrollers like the Raspberry Pi Pico. Efficient memory management is crucial for stable operations.
 We explored the gc module and learned how to check memory usage and free up resources when needed. Performance considerations, like avoiding excessive delays and optimizing loops, help ensure smooth operation.
 5. Event-Driven Programming and Input Handling:
 In event-driven programming, the system responds to external events (like user input or hardware interrupts).
