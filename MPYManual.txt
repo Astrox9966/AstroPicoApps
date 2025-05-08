@@ -21,18 +21,18 @@ CONTENTS:
 4. Control Structures - Line 128
 5. Functions - Line 162
 6. Modules and Libraries - Line 190
-7. Working with Files - Line 
-8. Working with Hardware - Line 
-9. Display & Graphics - Line 
-10. Data Structures - Line 
-11. Error Handling - Line 
-12. Memory & Performance Tips - Line 
-13. Time & Delays - Line 
-14. Input Handling - Line 
-15. Event-Driven Programming - Line 
-16. State Machines and Simulation Structuring - Line 
-17. Troubleshooting and Debugging - Line 
-18. Conclusion/Reflection - Line 
+7. Working with Files - Line 218
+8. Working with Hardware - Line 240
+9. Display & Graphics - Line 275 
+10. Data Structures - Line 315
+11. Error Handling - Line 339
+12. Memory & Performance Tips - Line 389
+13. Time & Delays - Line 436
+14. Input Handling - Line 470
+15. Event-Driven Programming - Line 519
+16. State Machines and Simulation Structuring - Line 570
+17. Troubleshooting and Debugging - Line 671
+18. Conclusion/Reflection - Line 740
 
 
 INTRODUCTION TO MICROPYTHON:
