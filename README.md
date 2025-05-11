@@ -6,5 +6,5 @@ Apps:
 2. Rocket Flight Controller (not started)
 
 Credits:
-Astrox9966 - main contributor
-DocEnilno - for looking for errors with the MPYManual
+- Astrox9966 - main contributor
+- DocEnilno - for looking for errors with the MPYManual
