@@ -7,7 +7,7 @@ import ustruct
 command_input = ""
 
 # === Setup PicoCalc Screen ===
-# Initialize the screen and set it to a resolution of 240x240
+# Initialize the screen and set it to a resolution of 312x312
 screen = picoexplorer.get_screen()
 
 # Menu navigation items
@@ -17,15 +17,22 @@ current_scene = "menu"  # Can be 'menu', 'file', 'app', or 'settings'
 
 # === Key Mapping (simulating PicoCalc's keyboard input) ===
 def get_keypress():
-    # Check for keypresses on PicoCalc (replace with actual key checking method)
+    # Simulating key mapping (modify this to your hardware keypress detection)
     key_map = {
-        "a": 0, "b": 1, "c": 2, "d": 3, "e": 4, "f": 5, "g": 6, "h": 7, "i": 8, "j": 9,
-        "up": "up", "down": "down", "enter": "enter", "backspace": "backspace", "esc": "esc"
+        "a": "a", "b": "b", "c": "c", "d": "d", "e": "e", "f": "f", "g": "g", "h": "h", "i": "i", "j": "j",
+        "k": "k", "l": "l", "m": "m", "n": "n", "o": "o", "p": "p", "q": "q", "r": "r", "s": "s", "t": "t",
+        "u": "u", "v": "v", "w": "w", "x": "x", "y": "y", "z": "z", 
+        "1": "1", "2": "2", "3": "3", "4": "4", "5": "5", "6": "6", "7": "7", "8": "8", "9": "9", "0": "0", 
+        "up": "up", "down": "down", "enter": "enter", "backspace": "backspace", "esc": "esc", "space": " "
     }
 
-    # Example simulation of input function (replace with PicoCalc-specific key check)
-    key = None
-    # Code to get actual key from PicoCalc's keypad should go here (via GPIO or UART)
+    # Simulate the detection of a key press (this should be replaced by your actual input detection logic)
+    # In a real case, you would read from GPIO or UART to get the pressed key
+    key = None  # This will be replaced by actual detection
+
+    # Example simulation (replace this with actual input code)
+    # For example, if a key is detected, you set 'key' to that key's value:
+    # key = 'a'  # Simulating pressing the "a" key
     return key
 
 # === Refresh screen ===
