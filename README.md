@@ -1,5 +1,6 @@
 # AstroPicoApps
 Apps made for the PicoCalc!
+If you want to share any of these files, please credit me, and please do not share them, pretending that you made it!
 
 Apps:
 1. Astralixi OS (work in progress)
@@ -7,4 +8,5 @@ Apps:
 
 Credits:
 - Astrox9966 - main contributor
-- DocEnilno - for looking for errors with the MPYManual
+
+
