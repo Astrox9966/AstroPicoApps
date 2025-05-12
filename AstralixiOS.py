@@ -1,122 +1,102 @@
 import time
-import sys
-import select
-import tty
-import termios
+from machine import Pin, UART
+import picoexplorer  # This is a library for PicoCalc's screen
+import ustruct
 
-# Simulated framebuf for desktop testing
-class FakeFrameBuffer:
-    def __init__(self):
-        self.buffer = []
+# Stores the current typed command in the File Manager scene
+command_input = ""
 
-    def fill(self, color):
-        self.buffer.clear()  # Clear the buffer (screen)
+# === Setup PicoCalc Screen ===
+# Initialize the screen and set it to a resolution of 240x240
+screen = picoexplorer.get_screen()
 
-    def text(self, text, x, y, color):
-        self.buffer.append((x, y, text))  # Add text to the buffer
-
-    def render(self):
-        print("\033c", end="")  # Clear terminal
-        for x, y, text in self.buffer:
-            print(f"[{y}px] {text}")  # Display the buffer content
-
-# Simulated display for testing (replaces Pico display code)
-class FakeDisplay:
-    def blit(self, buffer, x, y):
-        pass  # Not needed for simulation
-
-    def show(self):
-        fb.render()  # Render the frame buffer content
-
-# === DISPLAY SETUP ===
-width = 312
-height = 312
-fb = FakeFrameBuffer()
-display = FakeDisplay()
-
+# Menu navigation items
 menu_items = ["App Launcher", "File Manager", "Settings (coming soon)"]
 selected_index = 0
-current_scene = "menu"
+current_scene = "menu"  # Can be 'menu', 'file', 'app', or 'settings'
 
-# === INPUT SETUP ===
-def get_keypress(timeout=0.1):
-    fd = sys.stdin.fileno()
-    old_settings = termios.tcgetattr(fd)
-    try:
-        tty.setraw(fd)
-        rlist, _, _ = select.select([sys.stdin], [], [], timeout)
-        if rlist:
-            ch = sys.stdin.read(1)
-            if ch == '\x1b':  # Escape key
-                next1 = sys.stdin.read(1)
-                if next1 == '\r':
-                    return "alt_enter"
-                elif next1 == '[':
-                    next2 = sys.stdin.read(1)
-                    if next2 == 'A':
-                        return "up"
-                    elif next2 == 'B':
-                        return "down"
-            elif ch == '\r':
-                return "enter"
-            elif ch == 'w':
-                return "up"
-            elif ch == 's':
-                return "down"
-            elif ch == 'q':
-                return "quit"
-    finally:
-        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-    return None
+# === Key Mapping (simulating PicoCalc's keyboard input) ===
+def get_keypress():
+    # Check for keypresses on PicoCalc (replace with actual key checking method)
+    key_map = {
+        "a": 0, "b": 1, "c": 2, "d": 3, "e": 4, "f": 5, "g": 6, "h": 7, "i": 8, "j": 9,
+        "up": "up", "down": "down", "enter": "enter", "backspace": "backspace", "esc": "esc"
+    }
 
-# === SCENE FUNCTIONS ===
+    # Example simulation of input function (replace with PicoCalc-specific key check)
+    key = None
+    # Code to get actual key from PicoCalc's keypad should go here (via GPIO or UART)
+    return key
 
+# === Refresh screen ===
 def update_screen():
-    display.blit(fb.buffer, 0, 0)
-    display.show()
+    # Update the PicoCalc screen with the framebuffer
+    screen.update()
 
+# === Draw main menu ===
 def draw_menu():
-    fb.fill(0)  # Clear screen
-    fb.text("Astralixi OS", 10, 5, 1)
+    screen.clear()  # Clear screen
+    screen.set_pen(255, 255, 255)  # White color for text
+    screen.text("Astralixi OS", 10, 5, scale=2)
+    
     for i, item in enumerate(menu_items):
         prefix = ">" if i == selected_index else " "
-        fb.text(prefix + item, 10, 20 + i * 10, 1)
+        screen.text(prefix + item, 10, 30 + i * 20, scale=2)
 
-# Updated File Manager with selection and file opening functionality
+# === File Manager Scene ===
 def draw_file_manager(key):
-    fb.fill(0)  # Clear screen
-    fb.text("File Manager", 10, 5, 1)
+    global command_input  # Allow modifying the global variable
 
-    # List of files (this could be dynamic in a real OS)
+    # Handle key input for the command line
+    if isinstance(key, str):
+        if key == "backspace":
+            command_input = command_input[:-1]  # Remove last character
+        elif key == "enter":
+            # Placeholder: here is where you'd handle commands like "/new file type .txt"
+            # For now we just clear the input to simulate handling
+            command_input = ""
+        elif len(key) == 1:
+            command_input += key  # Add typed character
+
+    screen.clear()  # Clear screen for redraw
+    screen.set_pen(255, 255, 255)  # White color for text
+    screen.text("File Manager", 10, 5, scale=2)
+
+    # Command prompt at bottom
+    screen.text("> " + command_input, 10, 220, scale=2)
+
+    # Fake file list
     files = ["notes.txt", "notes1.txt", "notes2.txt", "apps/", "config.sys"]
 
-    # Loop through the files and display them
+    # Draw files with selection highlight
     for i, name in enumerate(files):
-        prefix = ">" if i == selected_index else " "  # Highlight the selected file
-        fb.text(prefix + name, 10, 20 + i * 10, 1)
+        prefix = ">" if i == selected_index else " "
+        screen.text(prefix + name, 10, 30 + i * 20, scale=2)
 
-    # If the user presses Enter, simulate "opening" the file
+    # Simulate opening a file (if Enter pressed while selecting)
     if key == "enter":
         selected_file = files[selected_index]
-        fb.fill(0)
-        fb.text(f"Opening {selected_file}...", 10, 30, 1)
-        time.sleep(2)  # Simulate file opening by pausing for a moment
+        screen.clear()
+        screen.text(f"Opening {selected_file}...", 10, 30, scale=2)
+        time.sleep(2)  # Simulate delay
 
-    return "file"  # Stay in file manager if no key is pressed
+    return "file"  # Stay in the file manager
 
 # === MAIN LOOP ===
 while True:
-    key = get_keypress()  # Get user input
+    key = get_keypress()  # Read keyboard input from PicoCalc
 
+    # Global quit
     if key == "quit":
-        break  # Exit the program
+        break
 
+    # === MENU ===
     if current_scene == "menu":
-        draw_menu()  # Display menu
+        draw_menu()
         if key == "up":
-            selected_index = (selected_index - 1) % len(menu_items)  # Move up
+            selected_index = (selected_index - 1) % len(menu_items)
         elif key == "down":
-            selected_index = (selected_index + 1) % len(menu_items)  # Move down
+            selected_index = (selected_index + 1) % len(menu_items)
         elif key == "enter":
             selected_option = menu_items[selected_index]
             if "App" in selected_option:
@@ -126,20 +106,23 @@ while True:
             elif "Settings" in selected_option:
                 current_scene = "settings"
 
+    # === APP PLACEHOLDER ===
     elif current_scene == "app":
-        fb.fill(0)
-        fb.text("Launching App...", 10, 30, 1)
+        screen.clear()
+        screen.text("Launching App...", 10, 30, scale=2)
 
+    # === FILE MANAGER ===
     elif current_scene == "file":
-        # Draw the file manager and handle file opening
         current_scene = draw_file_manager(key)
 
+    # === SETTINGS PLACEHOLDER ===
     elif current_scene == "settings":
-        fb.fill(0)
-        fb.text("Settings Coming Soon!", 10, 30, 1)
+        screen.clear()
+        screen.text("Settings Coming Soon!", 10, 30, scale=2)
 
-    if key == "alt_enter":
-        current_scene = "menu"  # Go back to the menu
+    # Shortcut to return to main menu
+    if key == "esc":
+        current_scene = "menu"
 
-    update_screen()  # Refresh the display after drawing
-    time.sleep(0.1)  # Small delay to avoid overloading CPU
+    update_screen()  # Refresh display
+    time.sleep(0.1)  # Slight pause for performance
