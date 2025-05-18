@@ -1,0 +1,129 @@
+  __  __ __  __ ____            _        __  __                         _ 
+ |  \/  |  \/  |  _ \          (_)      |  \/  |                       | |
+ | \  / | \  / | |_) | __ _ ___ _  ___  | \  / | __ _ _ __  _   _  __ _| |
+ | |\/| | |\/| |  _ < / _` / __| |/ __| | |\/| |/ _` | '_ \| | | |/ _` | |
+ | |  | | |  | | |_) | (_| \__ \ | (__  | |  | | (_| | | | | |_| | (_| | |
+ |_|  |_|_|  |_|____/ \__,_|___/_|\___| |_|  |_|\__,_|_| |_|\__,_|\__,_|_|
+
+ MMBasic is a high-level interpreted language based on Microsoft BASIC, 
+ designed for ease of use on microcontrollers and embedded systems. While it retains much of the traditional BASIC syntax, 
+ MMBasic is tailored for direct hardware interaction, such as GPIO, ADC, and serial communication. 
+ It runs on platforms like the Maximite, Micromite, and PicoMite. 
+ This manual will introduce both the basics and key features of MMBasic, 
+ helping you build robust embedded applications with minimal complexity.
+
+
+ CONTENTS:
+1. Introduction to MMBasic - Line 38
+2. Getting Started with MMBasic - Line 60
+3. Basic Syntax - Line 78
+4. Control Structures - Line 128
+5. Functions - Line 162
+6. Modules and Libraries - Line 190
+7. Working with Files - Line 218
+8. Working with Hardware - Line 240
+9. Display & Graphics - Line 275 
+10. Data Structures - Line 315
+11. Error Handling - Line 339
+12. Memory & Performance Tips - Line 389
+13. Time & Delays - Line 436
+14. Input Handling - Line 470
+15. Event-Driven Programming - Line 519
+16. Writing and Managing Custom Command Extensions - Line 600
+17. Troubleshooting and Debugging - Line 671
+18. Conclusion/Reflection - Line 740
+
+
+INTRODUCTION TO MMBASIC:
+MMBasic is an easy-to-learn, high-level programming language based on classic Microsoft BASIC.  
+It is designed to run directly on microcontrollers and single-board computers like the Raspberry Pi Pico.  
+Unlike compiled languages, MMBasic is interpreted, making development quick and highly interactive.  
+You can write code directly into the terminal, test ideas instantly, and modify programs on the fly.  
+MMBasic supports modern features like structured programming, subroutines, and local variables.  
+It includes built-in support for hardware interaction, making it ideal for embedded projects.  
+Access GPIO pins, control PWM signals, read analog inputs, and communicate via I2C or serial.  
+Programs can be stored in flash memory and run automatically on boot for standalone operation.  
+MMBasic also includes file system access, allowing you to read/write files on SD cards or flash.  
+It supports full-screen graphics, text rendering, and simple GUI creation on supported devices.  
+Whether you're making a data logger, a game, or a home automation system, MMBasic can handle it.  
+The language is beginner-friendly, yet powerful enough for serious development on constrained hardware.  
+MMBasic runs on several platforms: Maximite, Micromite, PicoMite, and Windows (for development/testing).  
+There is no need for external toolchains or compilers—just a terminal and your MMBasic device.  
+You can edit and save programs using built-in editors or over serial from your computer.  
+With structured loops, conditionals, and error handling, you can write robust embedded applications.  
+It features string manipulation, date/time functions, math operations, and custom subroutine support.  
+MMBasic is open and well-documented, with a helpful community and resources available online.  
+For Raspberry Pi Pico users, MMBasic turns the board into a standalone programmable computer.  
+The language is ideal for teaching programming concepts and experimenting with electronics.  
+Even without an operating system, MMBasic gives you a friendly and powerful development environment.  
+Throughout this manual, you’ll learn how to write MMBasic programs from scratch to deployment.  
+Each section builds on the last, introducing syntax, logic, hardware control, and real-world examples.  
+By the end, you'll be equipped to build reliable, interactive systems using only MMBasic.  
+Let’s get started with the world of MMBasic!
+
+
+GETTING STARTED WITH MMBASIC:
+Getting started with MMBasic is easy and requires only a few simple steps to begin programming your device.  
+First, choose a supported platform, like the Maximite, Micromite, or Raspberry Pi Pico running PicoMite.  
+For Raspberry Pi Pico, you’ll need a USB cable to connect the board to your computer.  
+Download MMBasic for your platform from the official website and install it on the device.  
+If you’re using a Pico, simply flash the MMBasic firmware onto the Pico using a tool like **picotool**.  
+Once flashed, your device is ready to run MMBasic code directly from the terminal interface.  
+Connect to the device via a serial terminal (like Tera Term or PuTTY) to interact with MMBasic.  
+The terminal window will display a prompt where you can enter your MMBasic code interactively.  
+To start coding, type simple commands like `PRINT "Hello, World!"` and hit **Enter**.  
+The device will immediately display "Hello, World!" on the terminal screen.  
+You can also write longer programs directly in the terminal or use an editor like MMEdit.  
+To enter **edit mode**, type `EDIT` and press **Enter**, allowing you to write multi-line programs.  
+In edit mode, type your code, and once finished, save it with the **F2** key to store it in memory.  
+Programs can be saved to **flash memory**, allowing them to run automatically when powered on.  
+To execute your program, simply type `RUN` in the terminal and see your program run in real-time.  
+Basic commands like `PRINT`, `LET`, `INPUT`, and `GOTO` let you interact with the system and create simple programs.  
+MMBasic supports loops (`FOR`, `WHILE`), conditionals (`IF`, `SELECT CASE`), and functions for structured programming.  
+To stop a running program, press **Ctrl + C**, which will interrupt the execution and return to the prompt.  
+You can also use `LIST` to view your current program or `RUN` again to restart it.  
+MMBasic automatically manages memory for most tasks, but complex programs may require optimization.  
+External devices can be controlled via GPIO pins, which are easily accessed through simple commands.  
+You can read inputs from sensors or control LEDs, motors, and other hardware directly from your code.  
+To store and manage data, MMBasic allows access to files on an SD card or internal storage for reading/writing.  
+The MMBasic interpreter also includes basic debugging features, such as line numbers and error messages.  
+To exit the terminal or shutdown the device, use the **OFF** command or simply turn off the power.  
+This quick introduction covers just the basics, but MMBasic offers deep functionality for advanced projects.  
+Explore the manual for more in-depth examples and tutorials to build anything from simple scripts to complex systems.  
+Now that you've set up MMBasic, you’re ready to start experimenting with programming and hardware projects!  
+
+
+BASIC SYNTAX:
+MMBasic syntax is simple, designed for ease of use while still providing powerful functionality for projects.  
+Variables are created simply by assigning values, and there's no need for explicit type declarations.  
+For example, to create a variable `A` and assign it the value of 10, just write: `A = 10`.  
+MMBasic supports common data types like integers, floats, strings, and boolean values.  
+To assign a string value to a variable, use quotes: `Name = "John"`.  
+For floating-point numbers, use a decimal point: `Pi = 3.14159`.  
+Booleans are represented as either `TRUE` or `FALSE`. Example: `IsActive = TRUE`.  
+Comments are written using an apostrophe (`'`) and are ignored by the interpreter.  
+For example: `' This is a comment`.  
+Line numbers are optional in MMBasic, but they can help with referencing specific parts of your program.  
+To print output to the screen, use the `PRINT` command: `PRINT "Hello, World!"`.  
+To take user input, use `INPUT`: `INPUT "Enter your name: ", Name`.  
+You can combine text and variables in `PRINT` statements: `PRINT "Hello, "; Name`.  
+The `LET` command is optional but can be used for assignments, like: `LET A = 10`.  
+You can perform basic arithmetic operations, such as `+`, `-`, `*`, `/`, and `MOD`.  
+Example: `Result = 10 + 5` or `Remainder = 7 MOD 3`.  
+Comparison operators include: `=`, `<>`, `<`, `>`, `<=`, and `>=`.  
+Logical operators include: `AND`, `OR`, `NOT`. Example: `IF A > 5 AND B < 10 THEN ...`.  
+Use `GOTO` to jump to a line number or label in the code. Example: `GOTO 100`.  
+For loops, use `FOR...NEXT`: `FOR I = 1 TO 10`. To increment or decrement, use `STEP`: `FOR I = 10 TO 1 STEP -1`.  
+For conditional statements, use `IF...THEN...ELSE`. Example: `IF A = 5 THEN PRINT "Five" ELSE PRINT "Not Five"`.  
+You can also use `SELECT CASE` for multi-condition checks: `SELECT CASE A`.  
+The `END IF` or `END SELECT` statement marks the end of the conditional block.  
+Arrays in MMBasic are declared using the `DIM` keyword: `DIM A(10)`.  
+Strings can be manipulated with commands like `LEN`, `MID`, `LEFT`, `RIGHT`, and `ASC`.  
+To clear the screen, use `CLS`. Example: `CLS`.  
+Use `WAIT` to create delays in your program: `WAIT 1000` (waits 1 second).  
+To run a program, type `RUN` after writing or editing it.  
+This overview covers the basics; there are many more advanced features to explore in MMBasic.  
+
+
+
+
