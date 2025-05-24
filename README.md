@@ -9,4 +9,7 @@ Apps:
 Credits:
 - Astrox9966 - main contributor
 
+#### Astralixi OS:
+When you use Astralixi OS, you must have a folder on your SD card called "software", with all of your software/apps inside of it.
+
 
